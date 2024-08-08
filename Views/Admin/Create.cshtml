@@ -1,0 +1,68 @@
+@model SportSync.Models.Usuario
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- (omitir por brevedad, sigue igual) -->
+</head>
+<body>
+    <div class="container">
+        <h1>Crear Usuario</h1>
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Nombre"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApPaterno"></label>
+                <input asp-for="ApPaterno" class="form-control" />
+                <span asp-validation-for="ApPaterno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApMaterno"></label>
+                <input asp-for="ApMaterno" class="form-control" />
+                <span asp-validation-for="ApMaterno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Correo"></label>
+                <input asp-for="Correo" class="form-control" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pass"></label>
+                <input asp-for="Pass" class="form-control" />
+                <span asp-validation-for="Pass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NombreCelular"></label>
+                <input asp-for="NombreCelular" class="form-control" />
+                <span asp-validation-for="NombreCelular" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRol"></label>
+                <select asp-for="IdRol" class="form-control">
+                    <option value="1">Administrador</option>
+                    <option value="2">Organizador</option>
+                    <option value="3">Coach</option>
+                    <option value="4">Árbitro</option>
+                    <option value="5">Contador</option>
+                </select>
+                <span asp-validation-for="IdRol" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+    </div>
+
+    <script src="~/js/app.js"></script>
+    <script src="~/js/mostrarJ.js"></script>
+    <script src="~/js/tablas.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
