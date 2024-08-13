@@ -1,0 +1,78 @@
+@model SportSync.Models.ViewModels.PageInfoViewModel
+
+@{
+    var idTorneo = ViewBag.IdTorneo;
+}
+
+<!-- Segundo navbar -->
+@await Html.PartialAsync("~/Views/Shared/Partials/_navbarTorneo.cshtml")
+
+
+<main class="p-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 p-3">
+                <div class="shadow-lg bg-body rounded p-4">
+                    <div class="input-group p-4">
+                        <i class="input-group-text rounded-0 fa-solid fa-magnifying-glass"></i>
+                        <input type="text"
+                               class="form-control rounded-0"
+                               placeholder="Buscar equipo" />
+                    </div>
+                    <!-- Cards fila -->
+                    <div class="row">
+                        @foreach (var equipo in Model.Equipos)
+                        {
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body card-contenido">
+                                        <img src="https://via.placeholder.com/150"
+                                             alt="Imagen del equipo" />
+                                        <div>
+                                            <p class="card-text fs-6">
+                                                <strong>Nombre del equipo:</strong><br />
+                                                <span>@equipo.Nombre</span><br />
+                                                <strong>Deporte:</strong><br />
+                                                <span>@equipo.Categoria</span>
+                                            </p>
+                                            @* <a href="equipo.html" class="btn btn-outline-primary">Más información</a> *@
+                                            <a href="@Url.Action("Equipo", "PageMain", new { idEquipo = equipo.IdEquipo })" class="btn btn-outline-primary">Más información</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- Fin Cards -->
+                </div>
+            </div>
+            <!-- Columa de noticias -->
+            <div class="col-md-4 p-3">
+                <!-- cards -->
+                <div class="container-fluid p-3 border border-dark mb-3">
+                    @foreach (var noticia in Model.Noticias)
+                    {
+                        <div class="card rounded-0 mb-3">
+                            <div class="ratio ratio-16x9">
+                                <iframe src="https://www.youtube.com/embed/DgdD5rUozew?si=O1REZp9SKbyK84uh"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@noticia.Titulo</h5>
+                                <p class="card-text">
+                                    @noticia.Contenido
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!--fin cards -->
+            </div>
+            <!-- fin Columa de noticias -->
+        </div>
+    </div>
+</main>

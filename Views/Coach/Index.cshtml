@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Torneos Coach";
+}
+
+@{
+    Layout = "_LayoutTorneos";
+}
+
+
+<div class="container">
+  <h1>Torneos</h1>
+  @if (User.Identity.IsAuthenticated != null)
+                  {
+                    <span class="text-dark ">@User.Identity.Name</span>
+                  }
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/400x200" alt="Torneo 1">
+      <div class="card-content">
+        <h2>Torneo 1</h2>
+        <p>Información sobre el torneo 1.</p>
+        <a href="#">Ir al torneo 1</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/400x200" alt="Torneo 2">
+      <div class="card-content">
+        <h2>Torneo 2</h2>
+        <p>Información sobre el torneo 2.</p>
+        <a href="#">Ir al torneo 2</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/400x200" alt="Torneo 2">
+      <div class="card-content">
+        <h2>Torneo 2</h2>
+        <p>Información sobre el torneo 2.</p>
+        <a href="#">Ir al torneo 2</a>
+      </div>
+    </div>
+
+  </div>
+</div>

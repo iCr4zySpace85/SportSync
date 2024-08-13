@@ -14,14 +14,17 @@ public partial class Partido
     public TimeOnly Hora { get; set; }
 
     public string Ubicacion { get; set; } = null!;
+    public string NombreEquipoLocal { get; set; } = null!;
 
     public int IdEquipoLocal { get; set; }
+    public string NombreEquipoVisitante { get; set; } = null!;
 
     public int IdEquipoVisitante { get; set; }
 
     public int IdOrganizador { get; set; }
 
     public string Estado { get; set; } = null!;
+    public int IdEquipo { get; set; }
 
     public virtual ICollection<Arbitraje> Arbitrajes { get; set; } = new List<Arbitraje>();
 

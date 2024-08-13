@@ -14,6 +14,7 @@ public partial class Noticia
     public DateTime FechaPublicacion { get; set; }
 
     public int IdAutor { get; set; }
+    public int IdTorneo { get; set; }
 
     public virtual Usuario IdAutorNavigation { get; set; } = null!;
 
