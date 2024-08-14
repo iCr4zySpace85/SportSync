@@ -1,17 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportSync.Data;
 using SportSync.Models;
 using SportSync.ViewModels;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace SportSync.Controllers
 {
-    public class AdminController : Controller
+    [Authorize(Roles = "Administrador")]
+    public class AdministradorController : Controller
     {
        private readonly SportSyncContext _context;
 
-        public AdminController(SportSyncContext context)
+        public AdministradorController(SportSyncContext context)
         {
             _context = context;
         }
@@ -26,7 +29,8 @@ namespace SportSync.Controllers
                 { 2, "Organizador" },
                 { 3, "Coach" },
                 { 4, "Árbitro" },
-                { 5, "Contador" }
+                { 5, "Contador" },
+                { 6, "Medico" }
             };
 
             var model = new UsuariosViewModel

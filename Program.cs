@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SportSync.Data.Servicios;
 using SportSync.Data;
@@ -8,11 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SportSyncContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Configurar servicios de autenticaci�n
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Home/Login";
+        options.LogoutPath = "/Home/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    });
+
 builder.Services.AddSingleton(new Contexto(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
