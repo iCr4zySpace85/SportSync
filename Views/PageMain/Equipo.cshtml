@@ -1,0 +1,75 @@
+@model SportSync.Models.ViewModels.PageInfoViewModel
+    <!-- Segundo navbar -->
+   @await Html.PartialAsync("~/Views/Shared/Partials/_navbarEquipo.cshtml")
+
+@{
+    var idEquipo = ViewBag.IdEquipo;
+}
+
+<main class="p-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 p-3">
+                <div class="shadow-lg bg-body rounded p-4">
+                    <div class="pb-4">
+                        <strong>Próximos partidos</strong>
+                    </div>
+                    <!-- Cards fila -->
+                    <div class="row">
+                        @foreach (var partido in Model.Partidos)
+                        {
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body card-partidos">
+                                        <div class="image-container">
+                                            <img src="https://via.placeholder.com/150"
+                                                 alt="Imagen del equipo local" />
+                                            <strong>@partido.NombreEquipoLocal</strong>
+                                        </div>
+                                        <div class="content">
+                                            <p class="card-text fs-6 text-center">
+                                                <span>@partido.Ubicacion</span>
+                                                <strong>VS</strong><br />
+                                                <span>@partido.Hora.ToString("hh:mm tt")</span>
+                                                <span>@partido.Fecha.ToString("MMMM dd")</span>
+                                            </p>
+                                        </div>
+                                        <div class="image-container">
+                                            <img src="https://via.placeholder.com/150"
+                                                 alt="Imagen del equipo visitante" />
+                                            <strong>@partido.NombreEquipoVisitante</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- Fin Cards -->
+                </div>
+            </div>
+
+            <!-- Columna de noticias -->
+            <div class="col-md-4 p-3">
+                @foreach (var noticia in Model.Noticias)
+                {
+                    <!-- cards -->
+                    <div class="container-fluid p-3 border border-dark mb-3">
+                        <div class="card rounded-0">
+                            <div class="card-body">
+                                <h5 class="card-title">@noticia.Titulo</h5>
+                                <p class="card-text">
+                                    @noticia.Contenido
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Publicado el @noticia.FechaPublicacion.ToString("MMMM dd, yyyy")</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--fin cards -->
+                }
+            </div>
+            <!-- fin Columa de noticias -->
+        </div>
+    </div>
+</main>

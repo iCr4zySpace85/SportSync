@@ -19,8 +19,6 @@ public partial class SportSyncContext : DbContext
 
     public virtual DbSet<AsignacionesArbitraje> AsignacionesArbitrajes { get; set; }
 
-    public virtual DbSet<BiometricosJugadore> BiometricosJugadores { get; set; }
-
     public virtual DbSet<Deporte> Deportes { get; set; }
 
     public virtual DbSet<Equipo> Equipos { get; set; }
@@ -124,35 +122,6 @@ public partial class SportSyncContext : DbContext
                 .HasForeignKey(d => d.IdPartido)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("asignaciones_arbitraje_id_partido_fkey");
-        });
-
-        modelBuilder.Entity<BiometricosJugadore>(entity =>
-        {
-            entity.HasKey(e => e.IdBiometrico).HasName("biometricos_jugadores_pkey");
-
-            entity.ToTable("biometricos_jugadores");
-
-            entity.Property(e => e.IdBiometrico).HasColumnName("id_biometrico");
-            entity.Property(e => e.Calorias)
-                .HasPrecision(10, 2)
-                .HasColumnName("calorias");
-            entity.Property(e => e.Distancia)
-                .HasPrecision(10, 2)
-                .HasColumnName("distancia");
-            entity.Property(e => e.Fecha)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("fecha");
-            entity.Property(e => e.IdJugador).HasColumnName("id_jugador");
-            entity.Property(e => e.Pasos).HasColumnName("pasos");
-            entity.Property(e => e.RitmoCardiaco).HasColumnName("ritmo_cardiaco");
-            entity.Property(e => e.SuenoHoras)
-                .HasPrecision(10, 2)
-                .HasColumnName("sueno_horas");
-
-            entity.HasOne(d => d.IdJugadorNavigation).WithMany(p => p.BiometricosJugadores)
-                .HasForeignKey(d => d.IdJugador)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("biometricos_jugadores_id_jugador_fkey");
         });
 
         modelBuilder.Entity<Deporte>(entity =>
