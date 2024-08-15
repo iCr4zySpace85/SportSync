@@ -20,5 +20,6 @@ public partial class Jugadore
     public int? Numero { get; set; }
 
     public string? Descripcion { get; set; }
+
     public virtual Equipo IdEquipoNavigation { get; set; } = null!;
 }

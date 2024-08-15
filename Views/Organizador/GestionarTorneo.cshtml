@@ -13,9 +13,9 @@
 
     <title>Torneos | SportSync</title>
 
-    <link href="../css/app.css" rel="stylesheet" />
-    <link href="../css/sidebar.css" rel="stylesheet" />
-    <link href="../css/styles.css" rel="stylesheet" />
+    <link href="~/css/app.css" rel="stylesheet" />
+    <link href="~/css/sidebar.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
@@ -107,9 +107,9 @@
                   data-bs-toggle="dropdown"
                 >
                   <img
-                    src="../img/user-perfil.png"
+                    src="~/img/user-perfil.png"
                     class="avatar img-fluid rounded me-1"
-                    alt="Charles Hall"
+                    alt="Perfil"
                   />
                 </a>
 
@@ -121,7 +121,7 @@
                   <img
                     src="~/img/user-perfil.png"
                     class="avatar img-fluid rounded me-1"
-                    alt="Charles Hall"
+                    alt="Perfil"
                   />
                   @if (User.Identity.IsAuthenticated != null)
                   {
@@ -132,8 +132,9 @@
                   <div class="dropdown-divider"></div>
 
                   <a asp-action="CerrarSesion" asp-controller="Home" class="dropdown-item text-danger">
-                    <i  class="align-middle me-1" data-feather="log-out"></i
-                    >Cerrar sesión</a>
+                    <i class="align-middle me-1" data-feather="log-out"></i>
+                    Cerrar sesión
+                  </a>
                 </div>
               </li>
             </ul>
@@ -159,19 +160,19 @@
                     <h3 class="fw-bold">Gestión del torneo</h3>
                   </div>
                   <div class="card-body align-self-center">
-                    <form action="" class="p-">
+                    <form action="@Url.Action("GuardarCambios", "Organizador")" method="post">
                       <div class="row">
                         <div class="col-md-6">
                           <div class="mb-3 text-center">
                             <p class="form-label">Imagen del torneo:</p>
                             <img
-                              src="../img/torneos/torneo1.jpeg"
+                              src="~/img/torneos/torneo1.jpeg"
                               width="200"
                             />
                           </div>
                           <div class="mb-3">
                             <label class="form-label">Nombre del torneo:</label>
-                            <input type="text" class="form-control" required />
+                            <input type="text" class="form-control" name="nombreTorneo" required />
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -179,9 +180,11 @@
                             <label class="form-label">Deporte:</label>
                             <select
                               class="form-select"
+                              name="deporte"
                               aria-label="Default select example"
+                              required
                             >
-                              <option selected>Selecciona un deporte</option>
+                              <option selected disabled>Selecciona un deporte</option>
                               <option value="1">Futbol</option>
                               <option value="2">Basketball</option>
                               <option value="3">Volleyball</option>
@@ -191,9 +194,11 @@
                             <label class="form-label">Categoria:</label>
                             <select
                               class="form-select"
+                              name="categoria"
                               aria-label="Default select example"
+                              required
                             >
-                              <option selected>Selecciona categoria</option>
+                              <option selected disabled>Selecciona categoria</option>
                               <option value="1">Femenino</option>
                               <option value="2">Infantil</option>
                               <option value="3">Profesional</option>
@@ -202,184 +207,144 @@
                         </div>
                       </div>
                       <div class="row">
-                        <p>Rango de edad:</p>
-                        <div class="col-md-2">
-                          <div class="mb-3">
-                            <label class="form-label">De:</label>
-                            <input
-                              type="number"
-                              class="form-control"
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="mb-3">
-                            <label class="form-label">Hasta:</label>
-                            <input
-                              type="number"
-                              class="form-control"
-                              required
-                            />
-                          </div>
-                        </div>
                         <div class="col-md-4">
                           <div class="mb-3">
                             <label class="form-label">Fecha de inicio:</label>
-                            <input type="date" class="form-control" required />
+                            <input
+                              type="date"
+                              class="form-control"
+                              name="fechaInicio"
+                              required
+                            />
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="mb-3">
                             <label class="form-label">Fecha de fin:</label>
-                            <input type="date" class="form-control" required />
+                            <input
+                              type="date"
+                              class="form-control"
+                              name="fechaFin"
+                              required
+                            />
                           </div>
                         </div>
                       </div>
-                      <div class="text-center m-3">
-                        <button type="submit" class="btn btn-primary">
-                          Guardar cambios
-                        </button>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Ubicación:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="ubicacion"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Costo de inscripción:</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              name="costoInscripcion"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">
+                              Guardar Cambios
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </form>
-                    <h4 class="ms-3">Equipos participantes</h4>
-                    <table class="table table-striped display" id="equipos">
+                  </div>
+                </div>
+              </div>
+              <!-- Equipos Inscritos -->
+              <div class="col-12 mt-3">
+                <div class="card">
+                  <div class="card-header text-center">
+                    <h3 class="fw-bold">Equipos Inscritos</h3>
+                  </div>
+                  <div class="card-body">
+                    <table id="datatables-reponsive" class="table table-striped w-100">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>Equipo</th>
-                          <th>Coache</th>
+                          <th>Nombre del equipo</th>
+                          <th>Categoria</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td></td>
-                          <td>
-                            <button class="btn btn-danger fw-bold">
-                              Eliminar
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td></td>
-                          <td>
-                            <button class="btn btn-danger fw-bold">
-                              Eliminar
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry the Bird</td>
-                          <td></td>
-                          <td>
-                            <button class="btn btn-danger fw-bold">
-                              Eliminar
-                            </button>
-                          </td>
-                        </tr>
+                        @foreach (var equipoTorneo  in Model.EquiposTorneos)
+                        {
+                          var equipo = equipoTorneo.Equipo; // Accede a la propiedad de navegación 'Equipo' directamente
+                          <tr>
+                            <td>@equipo.Nombre</td>
+                            <td>@equipo.Categoria</td>
+                            <td>
+                              <button class="btn btn-danger" asp-action="EliminarEquipo" asp-route-id="@equipo.IdEquipo">
+                                Eliminar
+                              </button>
+                            </td>
+                          </tr>
+                        }
                       </tbody>
                     </table>
-                    <div class="text-center m-3">
-                      <button
-                        class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#agregarEquipo"
-                      >
-                        <i
-                          class="fa-solid fa-circle-plus m-2"
-                          style="color: #ffffff; font-size: medium"
-                        ></i
-                        >Agregar equipo
-                      </button>
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#agregarEquipoModal">
+                          Agregar Equipo
+                        </button>
+                      </div>
                     </div>
+
+                    <!-- Modal para agregar equipo -->
+                    <div class="modal fade" id="agregarEquipoModal" tabindex="-1" aria-labelledby="agregarEquipoModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="agregarEquipoModalLabel">Agregar nuevo equipo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="@Url.Action("AgregarEquipo", "Organizador")" method="post">
+                              <div class="mb-3">
+                                <label class="form-label">Nombre del equipo:</label>
+                                <input type="text" class="form-control" name="nombreEquipo" required />
+                              </div>
+                              <div class="mb-3">
+                                <label class="form-label">Categoria:</label>
+                                <input type="text" class="form-control" name="categoria" required />
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Agregar Equipo</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Fin del Modal -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <div
-            class="modal fade"
-            id="agregarEquipo"
-            tabindex="-1"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-              <div class="modal-content rounded-0">
-                <div class="modal-header bg-azul rounded-0 text-white">
-                  <h1 class="modal-title fs-5 text-white">Agregar arbitro</h1>
-                  <button
-                    type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form action="" class="p-">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="mb-3">
-                          <label class="form-label">Equipos:</label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option selected>Selecciona equipo</option>
-                            <option value="1">Los motas</option>
-                            <option value="2">Los bellakos</option>
-                            <option value="3">Trikitrakatelas</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="mt-3 text-md-end">
-                      <button
-                        type="button"
-                        class="btn btn-danger rounded-0"
-                        data-bs-dismiss="modal"
-                      >
-                        Cancelar
-                      </button>
-                      <button
-                        type="submit"
-                        class="btn btn-primary"
-                        href="reglas.html"
-                      >
-                        Agregar
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
         </main>
-
-        <footer class="footer">
-          <div class="container-fluid">
-            <div class="row text-muted">
-              <div class="col-6 text-start">
-                <p class="mb-0">
-                  <a class="text-muted" href="" target="_blank"
-                    ><strong>SPORTSYNC</strong></a
-                  >
-                  &copy;
-                </p>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
-
     <script src="~/js/app.js"></script>
+    <script src="~/js/sidebar.js"></script>
+    <script src="~/js/datatables.js"></script>
   </body>
 </html>

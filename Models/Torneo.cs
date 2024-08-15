@@ -7,8 +7,7 @@ public partial class Torneo
 {
     public int IdTorneo { get; set; }
 
-    public string ImgTorneo { get; set; } = null!;
-
+    public string? ImgTorneo { get; set; }
 
     public string Nombre { get; set; } = null!;
 

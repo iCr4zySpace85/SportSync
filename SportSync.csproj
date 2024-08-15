@@ -20,10 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Shared\Partials\_navbarPageMainTorneo.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+
+    <Folder Include="wwwroot\images\" />
+
   </ItemGroup>
 
 </Project>

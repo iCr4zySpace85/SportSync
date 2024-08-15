@@ -12,9 +12,9 @@ namespace SportSync.Controllers
     [Authorize(Roles = "Administrador")]
     public class AdministradorController : Controller
     {
-       private readonly SportSyncContext _context;
+       private readonly SportsyncContext _context;
 
-        public AdministradorController(SportSyncContext context)
+        public AdministradorController(SportsyncContext context)
         {
             _context = context;
         }

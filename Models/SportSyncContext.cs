@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SportSync.Models;
 
-public partial class SportSyncContext : DbContext
+public partial class SportsyncContext : DbContext
 {
-    public SportSyncContext()
+    public SportsyncContext()
     {
     }
 
-    public SportSyncContext(DbContextOptions<SportSyncContext> options)
+    public SportsyncContext(DbContextOptions<SportsyncContext> options)
         : base(options)
     {
     }
@@ -18,6 +18,10 @@ public partial class SportSyncContext : DbContext
     public virtual DbSet<Arbitraje> Arbitrajes { get; set; }
 
     public virtual DbSet<AsignacionesArbitraje> AsignacionesArbitrajes { get; set; }
+
+    public virtual DbSet<AuditoriaAb> AuditoriaAbs { get; set; }
+
+    public virtual DbSet<AuditoriaAc> AuditoriaAcs { get; set; }
 
     public virtual DbSet<Deporte> Deportes { get; set; }
 
@@ -57,7 +61,7 @@ public partial class SportSyncContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=dpg-cqq0utaj1k6c73d93oe0-a.oregon-postgres.render.com;Database=sportsync;Username=sportsync_user;Password=minOhTcLcwlblAVSIPv4DTAg5U6PWeja;");
+        => optionsBuilder.UseNpgsql("Host=dpg-cqq0utaj1k6c73d93oe0-a.oregon-postgres.render.com;Database=sportsync;Username=sportsync_user;Password=minOhTcLcwlblAVSIPv4DTAg5U6PWeja");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -124,6 +128,68 @@ public partial class SportSyncContext : DbContext
                 .HasConstraintName("asignaciones_arbitraje_id_partido_fkey");
         });
 
+        modelBuilder.Entity<AuditoriaAb>(entity =>
+        {
+            entity.HasKey(e => e.IdAuditoria).HasName("auditoria_ab_pkey");
+
+            entity.ToTable("auditoria_ab");
+
+            entity.Property(e => e.IdAuditoria).HasColumnName("id_auditoria");
+            entity.Property(e => e.CampoAfectado)
+                .HasMaxLength(50)
+                .HasColumnName("campo_afectado");
+            entity.Property(e => e.Fecha)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("fecha");
+            entity.Property(e => e.Mensaje).HasColumnName("mensaje");
+            entity.Property(e => e.TablaAfectada)
+                .HasMaxLength(50)
+                .HasColumnName("tabla_afectada");
+            entity.Property(e => e.TipoOperacion)
+                .HasMaxLength(10)
+                .HasColumnName("tipo_operacion");
+            entity.Property(e => e.UsuarioId).HasColumnName("usuario_id");
+            entity.Property(e => e.ValorAnterior).HasColumnName("valor_anterior");
+            entity.Property(e => e.ValorNuevo).HasColumnName("valor_nuevo");
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.AuditoriaAbs)
+                .HasForeignKey(d => d.UsuarioId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("auditoria_ab_usuario_id_fkey");
+        });
+
+        modelBuilder.Entity<AuditoriaAc>(entity =>
+        {
+            entity.HasKey(e => e.IdAuditoria).HasName("auditoria_ac_pkey");
+
+            entity.ToTable("auditoria_ac");
+
+            entity.Property(e => e.IdAuditoria).HasColumnName("id_auditoria");
+            entity.Property(e => e.CampoAfectado)
+                .HasMaxLength(50)
+                .HasColumnName("campo_afectado");
+            entity.Property(e => e.Fecha)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("fecha");
+            entity.Property(e => e.Mensaje).HasColumnName("mensaje");
+            entity.Property(e => e.TablaAfectada)
+                .HasMaxLength(50)
+                .HasColumnName("tabla_afectada");
+            entity.Property(e => e.TipoOperacion)
+                .HasMaxLength(10)
+                .HasColumnName("tipo_operacion");
+            entity.Property(e => e.UsuarioId).HasColumnName("usuario_id");
+            entity.Property(e => e.ValorAnterior).HasColumnName("valor_anterior");
+            entity.Property(e => e.ValorNuevo).HasColumnName("valor_nuevo");
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.AuditoriaAcs)
+                .HasForeignKey(d => d.UsuarioId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("auditoria_ac_usuario_id_fkey");
+        });
+
         modelBuilder.Entity<Deporte>(entity =>
         {
             entity.HasKey(e => e.IdDeporte).HasName("deportes_pkey");
@@ -146,11 +212,16 @@ public partial class SportSyncContext : DbContext
             entity.Property(e => e.Categoria)
                 .HasMaxLength(50)
                 .HasColumnName("categoria");
+            entity.Property(e => e.IdCoach).HasColumnName("id_coach");
             entity.Property(e => e.IdDeporte).HasColumnName("id_deporte");
             entity.Property(e => e.ImgEquipo).HasColumnName("img_equipo");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
                 .HasColumnName("nombre");
+
+            entity.HasOne(d => d.IdCoachNavigation).WithMany(p => p.Equipos)
+                .HasForeignKey(d => d.IdCoach)
+                .HasConstraintName("fk_equipos_usuarios");
 
             entity.HasOne(d => d.IdDeporteNavigation).WithMany(p => p.Equipos)
                 .HasForeignKey(d => d.IdDeporte)
@@ -557,7 +628,9 @@ public partial class SportSyncContext : DbContext
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("fecha_inicio");
             entity.Property(e => e.IdDeporte).HasColumnName("id_deporte");
-            entity.Property(e => e.ImgTorneo).HasColumnName("img_torneo");
+            entity.Property(e => e.ImgTorneo)
+                .HasColumnType("character varying")
+                .HasColumnName("img_torneo");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
                 .HasColumnName("nombre");
@@ -599,6 +672,9 @@ public partial class SportSyncContext : DbContext
             entity.Property(e => e.NombreCelular)
                 .HasMaxLength(15)
                 .HasColumnName("nombre_celular");
+            entity.Property(e => e.NombreUsuario)
+                .HasMaxLength(13)
+                .HasColumnName("nombre_usuario");
             entity.Property(e => e.Pass).HasColumnName("pass");
 
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
