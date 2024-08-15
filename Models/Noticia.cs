@@ -8,13 +8,13 @@ public partial class Noticia
     public int IdNoticia { get; set; }
 
     public string Titulo { get; set; } = null!;
+    public int IdTorneo { get; set; }
 
     public string? Contenido { get; set; }
 
     public DateTime FechaPublicacion { get; set; }
 
     public int IdAutor { get; set; }
-    public int IdTorneo { get; set; }
 
     public virtual Usuario IdAutorNavigation { get; set; } = null!;
 
