@@ -6,7 +6,7 @@ using SportSync.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<SportSyncContext>(options =>
+builder.Services.AddDbContext<SportsyncContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configurar servicios de autenticaci�n

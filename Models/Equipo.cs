@@ -14,7 +14,9 @@ public partial class Equipo
     public int IdDeporte { get; set; }
 
     public string Categoria { get; set; } = null!;
-    public int IdTorneo { get; set; }
+
+    public int? IdCoach { get; set; }
+
 
     public virtual ICollection<Arbitraje> Arbitrajes { get; set; } = new List<Arbitraje>();
 
@@ -23,6 +25,8 @@ public partial class Equipo
     public virtual ICollection<EvaluacionesArbitraje> EvaluacionesArbitrajeIdEquipoGanadorNavigations { get; set; } = new List<EvaluacionesArbitraje>();
 
     public virtual ICollection<EvaluacionesArbitraje> EvaluacionesArbitrajeIdEquipoPerdedorNavigations { get; set; } = new List<EvaluacionesArbitraje>();
+
+    public virtual Usuario? IdCoachNavigation { get; set; }
 
     public virtual Deporte IdDeporteNavigation { get; set; } = null!;
 

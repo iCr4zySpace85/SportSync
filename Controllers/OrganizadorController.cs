@@ -25,9 +25,9 @@ namespace SportSync.Controllers
     [Authorize(Roles = "Organizador, Administrador")]
     public class OrganizadorController : Controller
     {
-        private readonly SportSyncContext _context;
+        private readonly SportsyncContext _context;
 
-        public OrganizadorController(SportSyncContext context)
+        public OrganizadorController(SportsyncContext context)
         {
             _context = context;
         }
@@ -60,7 +60,7 @@ namespace SportSync.Controllers
         }
 
         // Acción para cargar los datos del torneo
-        public IActionResult GestionarTorneo(int id)
+       public IActionResult GestionarTorneo(int id)
         {
             var torneo = _context.Torneos
                 .Include(t => t.EquiposTorneos)

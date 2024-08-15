@@ -21,12 +21,12 @@ namespace SportSync.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SportSyncContext _context;
+        private readonly SportsyncContext _context;
 
  
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, SportSyncContext context)
+        public HomeController(ILogger<HomeController> logger, SportsyncContext context)
         {
             _logger = logger;
             _context = context;

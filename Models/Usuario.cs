@@ -25,9 +25,17 @@ public partial class Usuario
 
     public int IdRol { get; set; }
 
+    public string? NombreUsuario { get; set; }
+
     public virtual ICollection<Arbitraje> Arbitrajes { get; set; } = new List<Arbitraje>();
 
     public virtual ICollection<AsignacionesArbitraje> AsignacionesArbitrajes { get; set; } = new List<AsignacionesArbitraje>();
+
+    public virtual ICollection<AuditoriaAb> AuditoriaAbs { get; set; } = new List<AuditoriaAb>();
+
+    public virtual ICollection<AuditoriaAc> AuditoriaAcs { get; set; } = new List<AuditoriaAc>();
+
+    public virtual ICollection<Equipo> Equipos { get; set; } = new List<Equipo>();
 
     public virtual ICollection<EvaluacionesArbitraje> EvaluacionesArbitrajes { get; set; } = new List<EvaluacionesArbitraje>();
 

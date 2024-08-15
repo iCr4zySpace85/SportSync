@@ -165,7 +165,7 @@ namespace SportSync.Data.Servicios
                                     Nombre = reader.GetString(reader.GetOrdinal("nombre")),
                                     IdDeporte = reader.GetInt32(reader.GetOrdinal("id_deporte")),
                                     Categoria = reader.GetString(reader.GetOrdinal("categoria")),
-                                    IdTorneo = reader.GetInt32(reader.GetOrdinal("id_torneo"))
+                                    
                                 };
                                 equipos.Add(equipo);
                             }
