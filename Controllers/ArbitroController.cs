@@ -13,9 +13,9 @@ namespace SportSync.Controllers
     //[Authorize(Roles = "Árbitro")]
     public class ArbitroController : Controller
     {
-        private readonly SportSyncContext _context;
+        private readonly SportsyncContext _context;
 
-        public ArbitroController(SportSyncContext context)
+        public ArbitroController(SportsyncContext context)
         {
             _context = context;
         }
