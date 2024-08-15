@@ -7,49 +7,44 @@
 
 <main class="content">
     <div class="container-fluid p-0">
-        <div id="usuarioContenido" class="contenido">
-            <div class="card">
-                <div class="card-body">
-
-                    <div class="card-couch">
-                        <img src="https://via.placeholder.com/150" alt="Torneo Logo">
-                        @* <input type="text" placeholder="Nombre del torneo" value="@Model.TorneoNombre" readonly> *@
-                        <input type="text" placeholder="Categoría" value="@Model.Categoria" readonly>
-                        <input type="text" placeholder="Número de jugadores" value="@Model.NumeroJugadores" readonly>
-                        <br><br>
-                        <table class="players-table">
-                            <thead>
-                                <tr>
-                                    <th>Foto</th>
-                                    <th>Nombre</th>
-                                    <th>Edad</th>
-                                    <th>Número</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var jugador in Model.Jugadores)
-                                {
-                                    <tr>
-                                        <td><img src="https://via.placeholder.com/50" alt="Avatar"></td>
-                                        <td>@jugador.Nombre</td>
-                                        <td>@jugador.Edad</td>
-                                        <td>@jugador.Numero</td>
-                                        <td>
-                                            <button class="edit-btn">Editar</button>
-                                            <button class="delete-btn">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <div class="pagination">
-                            <div class="pagination-menu">
-                                <span class="pagination-item active">1</span>
-                                <span class="pagination-item">2</span>
-                                <span class="pagination-item">3</span>
-                            </div>
-                        </div>
+        <div  class="contenido">
+            <div class="card-couch">
+                <img src="https://via.placeholder.com/150" alt="Torneo Logo">
+                @* <input type="text" placeholder="Nombre del torneo" value="@Model.TorneoNombre" readonly> *@
+                <input type="text" placeholder="Categoría" value="@Model.Categoria" readonly>
+                <input type="text" placeholder="Número de jugadores" value="@Model.NumeroJugadores" readonly>
+                <br><br>
+                <table class="players-table">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Número</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var jugador in Model.Jugadores)
+                        {
+                            <tr>
+                                <td><img src="https://via.placeholder.com/50" alt="Avatar"></td>
+                                <td>@jugador.Nombre</td>
+                                <td>@jugador.Edad</td>
+                                <td>@jugador.Numero</td>
+                                <td>
+                                    <button class="edit-btn">Editar</button>
+                                    <button class="delete-btn">Eliminar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <div class="pagination-menu">
+                        <span class="pagination-item active">1</span>
+                        <span class="pagination-item">2</span>
+                        <span class="pagination-item">3</span>
                     </div>
                 </div>
             </div>

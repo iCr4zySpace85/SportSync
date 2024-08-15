@@ -2,274 +2,134 @@
 
 @{
     ViewData["Title"] = "SportSyncSoftware Organizador";
-    Layout = null;
+    Layout = "Organizador/_LayoutPanelOrganizador";
 }
 
+<main class="content">
+    <div class="container-fluid p-0">
+        <h3 class="fw-bold">Arbitros</h3>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <title>Arbitros | SportSync</title>
-
-    <link href="~/css/app.css" rel="stylesheet" />
-    <link href="~/css/sidebar.css" rel="stylesheet" />
-    <link href="~/css/styles.css" rel="stylesheet" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
-          rel="stylesheet" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          integrity="sha512-..." />
-</head>
-
-<body>
-    <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <div class="text-center bg-blue sidebar-brand">
-                    <div class="text-center">
-                        <div class="text-center">
-                            <img src="~/img/logo-sportsync.png"
-                                 class="img-fluid"
-                                 width="180" />
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="input-group flex-nowrap form-search">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text"
+                                   class="form-control form-xx"
+                                   placeholder="Buscar arbitro" />
                         </div>
                     </div>
-                </div>
-
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">Paginas</li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="Index">
-                            <i class="align-middle" data-feather="sliders"></i>
-                            <span class="align-middle">Torneos</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="coaches">
-                            <i class="align-middle" data-feather="user"></i>
-                            <span class="align-middle">Coaches</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="arbitros">
-                            <i class="align-middle" data-feather="user-check"></i>
-                            <span class="align-middle">Arbitros</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="equipos">
-                            <i class="align-middle" data-feather="users"></i>
-                            <span class="align-middle">Equipos</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="contabilidad">
-                            <i class="align-middle" data-feather="dollar-sign"></i>
-                            <span class="align-middle">Contabilidad</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="noticias">
-                            <i class="align-middle" data-feather="book"></i>
-                            <span class="align-middle">Noticias</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="main">
-            <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle js-sidebar-toggle">
-                    <i class="hamburger align-self-center"></i>
-                </a>
-
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav navbar-align">
-                        <li class="nav-item dropdown">
-                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none"
-                               href="#"
-                               data-bs-toggle="dropdown">
-                                <i class="align-middle" data-feather="settings"></i>
-                            </a>
-
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block"
-                               href="#"
-                               data-bs-toggle="dropdown">
-                                <img src="~/img/user-perfil.png"
-                                     class="avatar img-fluid rounded me-1"
-                                     alt="Charles Hall" />
-                                @if (User.Identity.IsAuthenticated != null)
+                    <div class="card-body">
+                        <table class="table table-striped display" id="equipos">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Partidos</th>
+                                    <th>Deporte</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var arbitro in Model.Usuarios)
                                 {
-                                    <span class="text-dark">@User.Identity.Name</span>
+                                    <tr>
+                                        <th scope="row">@arbitro.IdUsuario</th>
+                                        <td class="text-center">
+                                            <img class="img-fluid" src="~/img/arbitro.jpg" width="150" alt="Imagen del árbitro" />
+                                        </td>
+                                        <td>@($"{arbitro.Nombre} {arbitro.ApPaterno} {arbitro.ApMaterno}")</td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary fw-bold" asp-action="EditarArbitro" asp-route-id="@arbitro.IdUsuario">
+                                                Editar
+                                            </a>
+                                            <form asp-action="EliminarArbitro" method="post" style="display:inline;">
+                                                <input type="hidden" name="idUsuario" value="@arbitro.IdUsuario" />
+                                                <button type="submit" class="btn btn-danger fw-bold" onclick="return confirm('¿Estás seguro de que deseas eliminar a este árbitro?');">Eliminar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 }
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <div class="dropdown-divider"></div>
-
-                                <a asp-action="CerrarSesion" asp-controller="Home" class="dropdown-item text-danger">
-                                    <i class="align-middle me-1" data-feather="log-out"></i>Cerrar sesión
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <h3 class="fw-bold">Arbitros</h3>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="input-group flex-nowrap form-search">
-                                        <span class="input-group-text" id="addon-wrapping">
-                                            <i class="fa-solid fa-magnifying-glass"></i>
-                                        </span>
-                                        <input type="text"
-                                               class="form-control form-xx"
-                                               placeholder="Buscar arbitro" />
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped display" id="equipos">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Imagen</th>
-                                                <th>Nombre</th>
-                                                <th>Partidos</th>
-                                                <th>Deporte</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var arbitro in Model.Usuarios)
-                                            {
-                                                <tr>
-                                                    <th scope="row">@arbitro.IdUsuario</th>
-                                                    <td class="text-center">
-                                                        <img class="img-fluid" src="~/img/arbitro.jpg" width="150" alt="Imagen del árbitro" />
-                                                    </td>
-                                                    <td>@($"{arbitro.Nombre} {arbitro.ApPaterno} {arbitro.ApMaterno}")</td>
-                                                    <td>
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-primary fw-bold" asp-action="EditarArbitro" asp-route-id="@arbitro.IdUsuario">
-                                                            Editar
-                                                        </a>
-                                                        <form asp-action="EliminarArbitro" method="post" style="display:inline;">
-                                                            <input type="hidden" name="idUsuario" value="@arbitro.IdUsuario" />
-                                                            <button type="submit" class="btn btn-danger fw-bold" onclick="return confirm('¿Estás seguro de que deseas eliminar a este árbitro?');">Eliminar</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="button-floating p-4">
-                        <button class="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#agregar">
-                            <i class="fa-solid fa-circle-plus m-2"
-                               style="color: #ffffff; font-size: medium"></i>Nuevo arbitro
-                        </button>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="modal fade" id="agregar" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content rounded-0">
-                            <div class="modal-header bg-azul rounded-0 text-white">
-                                <h1 class="modal-title fs-5 text-white">Agregar arbitro</h1>
-                                <button type="button"
-                                        class="btn-close btn-close-white"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="@Url.Action("CrearArbitro", "Organizador")" method="post">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="crearArbitroModalLabel">Crear Árbitro</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label class="form-label">Nombre:</label>
-                                            <input asp-for="NuevoUsuario.Nombre" class="form-control" type="text" required />
-                                            <span asp-validation-for="NuevoUsuario.Nombre" class="text-danger"></span>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Apellido Paterno:</label>
-                                            <input asp-for="NuevoUsuario.ApPaterno" class="form-control" type="text" required />
-                                            <span asp-validation-for="NuevoUsuario.ApPaterno" class="text-danger"></span>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Apellido Materno:</label>
-                                            <input asp-for="NuevoUsuario.ApMaterno" class="form-control" type="text" required />
-                                            <span asp-validation-for="NuevoUsuario.ApMaterno" class="text-danger"></span>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Correo electrónico:</label>
-                                            <input asp-for="NuevoUsuario.Correo" class="form-control" type="email" required />
-                                            <span asp-validation-for="NuevoUsuario.Correo" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Contraseña:</label>
-                                            <input asp-for="NuevoUsuario.Pass" class="form-control" type="password" required />
-                                            <span asp-validation-for="NuevoUsuario.Pass" class="text-danger"></span>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="form-label">Teléfono Celular:</label>
-                                            <input asp-for="NuevoUsuario.NombreCelular" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Agregar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row text-muted">
-                        <div class="col-6 text-start">
-                            <p class="mb-0">
-                                <a class="text-muted" href="" target="_blank"><strong>SPORTSYNC</strong></a>
-                                &copy;
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            </div>
+        </div>
+        <div class="button-floating p-4">
+            <button class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#agregar">
+                <i class="fa-solid fa-circle-plus m-2"
+                   style="color: #ffffff; font-size: medium"></i>Nuevo arbitro
+            </button>
         </div>
     </div>
+    <div class="modal fade" id="agregar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-0">
+                <div class="modal-header bg-azul rounded-0 text-white">
+                    <h1 class="modal-title fs-5 text-white">Agregar arbitro</h1>
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="@Url.Action("CrearArbitro", "Organizador")" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crearArbitroModalLabel">Crear Árbitro</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre:</label>
+                                <input asp-for="NuevoUsuario.Nombre" class="form-control" type="text" required />
+                                <span asp-validation-for="NuevoUsuario.Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Apellido Paterno:</label>
+                                <input asp-for="NuevoUsuario.ApPaterno" class="form-control" type="text" required />
+                                <span asp-validation-for="NuevoUsuario.ApPaterno" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Apellido Materno:</label>
+                                <input asp-for="NuevoUsuario.ApMaterno" class="form-control" type="text" required />
+                                <span asp-validation-for="NuevoUsuario.ApMaterno" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Correo electrónico:</label>
+                                <input asp-for="NuevoUsuario.Correo" class="form-control" type="email" required />
+                                <span asp-validation-for="NuevoUsuario.Correo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contraseña:</label>
+                                <input asp-for="NuevoUsuario.Pass" class="form-control" type="password" required />
+                                <span asp-validation-for="NuevoUsuario.Pass" class="text-danger"></span>
+                            </div>
 
-    <script src="~/js/app.js"></script>
-</body>
-</html>
+                            <div class="form-group">
+                                <label class="form-label">Teléfono Celular:</label>
+                                <input asp-for="NuevoUsuario.NombreCelular" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
