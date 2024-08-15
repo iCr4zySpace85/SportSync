@@ -149,9 +149,12 @@
                                                                 <a type="button" class="btn btn-primary btn-sm" asp-controller="Organizador" asp-action="GestionarTorneo" asp-route-id="@torneo.IdTorneo">
                                                                     Gestionar
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-sm">
-                                                                    Eliminar
-                                                                </button>
+                                                                <form asp-action="EliminarTorneo" asp-controller="Organizador" method="post" class="d-inline">
+                                                                    <input type="hidden" name="idTorneo" value="@torneo.IdTorneo" />
+                                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este torneo?');">
+                                                                        Eliminar
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
