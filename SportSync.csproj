@@ -19,10 +19,10 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.18" />
   </ItemGroup>
 
+
   <ItemGroup>
 
     <Folder Include="wwwroot\images\" />
 
   </ItemGroup>
-
 </Project>

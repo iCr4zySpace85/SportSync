@@ -19,6 +19,8 @@ using SportSync.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SportSync.Models.ViewModels;
 
 namespace SportSync.Controllers
 {
@@ -71,8 +73,35 @@ namespace SportSync.Controllers
             {
                 return NotFound();
             }
+            var deportes = _context.Deportes.Select(d => new SelectListItem
+            {
+                Value = d.IdDeporte.ToString(),
+                Text = d.Nombre,
+                Selected = d.IdDeporte == torneo.IdDeporte // Marca el deporte seleccionado actualmente
+            }).ToList();
 
-            return View(torneo);
+            ViewBag.Deportes = deportes;
+
+            var equipos = _context.Equipos.Select(e => new SelectListItem
+            {
+                Value = e.IdEquipo.ToString(),
+                Text = e.Nombre
+            }).ToList();
+
+            ViewBag.Equipos = equipos;
+
+            // Obtiene la lista de equipos asociados al torneo
+            var equiposAsociados = torneo.EquiposTorneos
+                .Select(et => et.IdEquipoNavigation)
+                .ToList();
+
+            var model = new TorneoViewModel
+            {
+                Torneo = torneo,
+                Equipos = equiposAsociados
+            };
+
+            return View(model);
         }
 
 
@@ -80,60 +109,77 @@ namespace SportSync.Controllers
         [HttpPost]
         public IActionResult GuardarCambios(Torneo torneo)
         {
-            if (ModelState.IsValid)
+            if (torneo.Nombre != null)
             {
                 _context.Update(torneo);
                 _context.SaveChanges();
-                return RedirectToAction("GestionarTorneo", new { idTorneo = torneo.IdTorneo });
+                return RedirectToAction("GestionarTorneo", new { id = torneo.IdTorneo });
+            }
+            else { 
+                return View("GestionarTorneo", new { id = torneo.IdTorneo });
             }
 
-            return View("GestionarTorneo", torneo);
+            
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarTorneo(int idTorneo)
+        {
+            var torneo = await _context.Torneos.FindAsync(idTorneo);
+            if (torneo == null)
+            {
+                return NotFound();
+            }
+
+            _context.Torneos.Remove(torneo);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index"); // O a otra acción que desees
         }
 
 
         // Acción para agregar un nuevo equipo
         // Acción para agregar un nuevo equipo
         [HttpPost]
-        public async Task<IActionResult> AgregarEquipo(int idTorneo, string nombreEquipo, string categoria, int idDeporte)
+        public async Task<IActionResult> AgregarEquipo(int idTorneo, int idEquipo)
         {
-            var equipo = new Equipo
-            {
-                Nombre = nombreEquipo,
-                Categoria = categoria,
-                IdDeporte = idDeporte
-    };
+            
 
-            _context.Equipos.Add(equipo);
-            await _context.SaveChangesAsync();
+            
 
             var equipoTorneo = new EquiposTorneo
             {
                 IdTorneo = idTorneo,
-                IdEquipo = equipo.IdEquipo
+                IdEquipo = idEquipo
             };
 
             _context.EquiposTorneos.Add(equipoTorneo);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("GestionarTorneo", new { idTorneo = idTorneo });
+            return RedirectToAction("GestionarTorneo", new { id = idTorneo });
         }
 
 
 
 
-        // Acción para eliminar un equipo
-        public IActionResult EliminarEquipo(int id)
+        [HttpPost]
+        public IActionResult EliminarEquipo(int equipoId, int torneoId)
         {
-            var equipoTorneo = _context.EquiposTorneos.FirstOrDefault(et => et.IdEquipoTorneo == id);
+            // Busca la relación equipo-torneo por los IDs
+            var equipoTorneo = _context.EquiposTorneos
+                .FirstOrDefault(et => et.IdEquipo == equipoId && et.IdTorneo == torneoId);
 
-            if (equipoTorneo != null)
+            if (equipoTorneo == null)
             {
-                _context.EquiposTorneos.Remove(equipoTorneo);
-                _context.SaveChanges();
-                return RedirectToAction("GestionarTorneo", new { idTorneo = equipoTorneo.IdTorneo });
+                return NotFound();
             }
 
-            return NotFound(); // O redirigir a una página de error apropiada
+            // Elimina la relación entre el equipo y el torneo
+            _context.EquiposTorneos.Remove(equipoTorneo);
+            _context.SaveChanges();
+
+            // Redirige a la acción de gestionar torneo
+            return RedirectToAction("GestionarTorneo", new { id = torneoId });
         }
 
 
@@ -193,15 +239,87 @@ namespace SportSync.Controllers
             return View("~/Views/Organizador/torneos/reglas.cshtml");
         }
 
-        public IActionResult Coaches()
+        public async Task<IActionResult> Coaches()
         {
-            return View();
+            // Obtén el id del rol de Coach
+            var coachRoleId = await _context.Roles
+                .Where(r => r.NombreRol == "Coach")
+                .Select(r => r.IdRol)
+                .FirstOrDefaultAsync();
+
+            if (coachRoleId == 0)
+            {
+                return NotFound("Rol de Coach no encontrado.");
+            }
+
+            // Consulta los usuarios que tienen el rol de Coach, incluyendo su equipo
+            var coaches = await _context.Usuarios
+                .Include(u => u.Equipos)
+                .Where(u => u.IdRol == coachRoleId)
+                .ToListAsync();
+
+            var model = new CoachViewModel
+            {
+                Usuarios = coaches
+            };
+
+            return View(model);
         }
 
         public IActionResult Arbitros()
         {
-            return View();
+            var arbitros = _context.Usuarios.Where(u => u.IdRol == 4).ToList();
+            var model = new UsuarioViewModel
+            {
+                Usuarios = arbitros
+            };
+            return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearArbitro(UsuarioViewModel model)
+        {
+            if (model != null)
+            {
+                var nuevoArbitro = model.NuevoUsuario;
+                nuevoArbitro.IdRol = 4; // Asignar el rol de árbitro
+                nuevoArbitro.FechaCreacion = DateTime.Now;
+
+                _context.Usuarios.Add(nuevoArbitro);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Arbitros"); // Redirigir a la lista de árbitros después de la creación
+            }
+
+            // Si la validación falla, devolver la vista con el modelo actual y la lista de árbitros
+            var arbitros = _context.Usuarios.Where(u => u.IdRol == 4).ToList();
+            var viewModel = new UsuarioViewModel
+            {
+                Usuarios = arbitros
+            };
+
+            return View("Arbitros", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarArbitro(int idUsuario)
+        {
+            // Busca el árbitro por su ID
+            var arbitro = await _context.Usuarios.FindAsync(idUsuario);
+            if (arbitro == null || arbitro.IdRol != 4) // Asegúrate de que el usuario es un árbitro
+            {
+                return NotFound();
+            }
+
+            // Elimina el árbitro de la base de datos
+            _context.Usuarios.Remove(arbitro);
+            await _context.SaveChangesAsync();
+
+            // Redirige a la lista de árbitros
+            return RedirectToAction("Arbitros");
+        }
+
 
         public IActionResult Contabilidad()
         {
@@ -218,9 +336,14 @@ namespace SportSync.Controllers
             return View("~/Views/Organizador/contabilidad/cuenta.cshtml");
         }
 
-        public IActionResult Equipos()
+        public async Task<IActionResult> Equipos()
         {
-            return View();
+            var equipos = await _context.Equipos
+                .Include(e => e.IdCoachNavigation) // Incluir la relación con el Coach
+                .Include(e => e.IdDeporteNavigation) // Incluir la relación con Deporte si lo necesitas
+                .ToListAsync();
+
+            return View(equipos);
         }
 
         public IActionResult GestionarEquipo()
