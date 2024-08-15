@@ -19,11 +19,11 @@
                         @foreach (var partido in Model.Partidos)
                         {
                             <div class="col-md-6">
-                                <div class="card">
+                                @* <div class="card">
                                     <div class="card-body card-partidos">
+                                        <div class="row"><img src="https://via.placeholder.com/150" alt="Imagen del equipo local" /></div>
                                         <div class="image-container">
-                                            <img src="https://via.placeholder.com/150"
-                                                 alt="Imagen del equipo local" />
+                                            
                                             <strong>@partido.NombreEquipoLocal</strong>
                                         </div>
                                         <div class="content">
@@ -35,10 +35,28 @@
                                             </p>
                                         </div>
                                         <div class="image-container">
-                                            <img src="https://via.placeholder.com/150"
-                                                 alt="Imagen del equipo visitante" />
+                                            <img src="https://via.placeholder.com/150" alt="Imagen del equipo visitante" />
                                             <strong>@partido.NombreEquipoVisitante</strong>
                                         </div>
+                                    </div>
+                                </div> *@
+
+                                <div class="card h-100">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <p class="card-text fs-6 text-center">
+                                        <span>@partido.Ubicacion</span>
+                                        <strong>VS</strong><br />
+                                        <span>@partido.Hora.ToString("hh:mm tt")</span>
+                                        <span>@partido.Fecha.ToString("MMMM dd")</span>
+                                        </p>
+                                    </div>
+                                    <div class="image-container">
+                                        <img src="https://via.placeholder.com/150" alt="Imagen del equipo visitante" />
+                                        <strong>@partido.NombreEquipoVisitante</strong>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-body-secondary">Last updated 3 mins ago</small>
                                     </div>
                                 </div>
                             </div>

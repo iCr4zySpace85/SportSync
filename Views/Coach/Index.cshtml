@@ -1,10 +1,9 @@
 @{
     ViewData["Title"] = "Coach";
-}
-
-@{
     Layout = "_LayoutTorneosUsers";
 }
+
+@model IEnumerable<SportSync.Models.Torneo>
 
 <div class="container-fluid p-0">
     @if (User.Identity.IsAuthenticated)
@@ -25,8 +24,8 @@
                 <h2>@torneo.Nombre</h2>
                 <p>@torneo.Categoria</p>
                 <p>@torneo.FechaInicio.ToShortDateString() - @torneo.FechaFin.ToShortDateString()</p>
-                <a href="@Url.Action("DetalleTorneo", "Torneo", new { idTorneo = torneo.IdTorneo })">Ir al torneo</a>
+                <a href="@Url.Action("PanelEquipoCoach", "Coach", new { idTorneo = torneo.IdTorneo })">Ir al torneo</a>
             </div>
         </div>
     }
-</div>
+

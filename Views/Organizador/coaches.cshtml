@@ -1,205 +1,70 @@
 @model SportSync.ViewModels.CoachViewModel
 @{
     ViewData["Title"] = "SportSyncSoftware Organizador Coaches";
-    Layout = null;
+    Layout = "Organizador/_LayoutPanelOrganizador";
 }
 
+<main class="content">
+    <div class="container-fluid p-0">
+        <h3 class="fw-bold">Coaches</h3>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <title>SportSyncSoftware Organizador Coaches</title>
-
-    <link href="~/css/app.css" rel="stylesheet" />
-    <link href="~/css/sidebar.css" rel="stylesheet" />
-    <link href="~/css/styles.css" rel="stylesheet" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
-          rel="stylesheet" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          integrity="sha512-..." />
-</head>
-
-<body>
-    <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <div class="text-center bg-blue sidebar-brand">
-                    <div class="text-center">
-                        <div class="text-center">
-                            <img src="~/img/logo-sportsync.png"
-                                 class="img-fluid"
-                                 width="180" />
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="input-group flex-nowrap form-search">
+                            <span class="input-group-text" id="addon-wrapping">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text"
+                                   class="form-control form-xx"
+                                   placeholder="Buscar Coache" />
                         </div>
                     </div>
-                </div>
+                    <div class="card-body">
+                        <table class="table table-striped display" id="equipos">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Equipo</th>
 
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">Paginas</li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="index">
-                            <i class="align-middle" data-feather="sliders"></i>
-                            <span class="align-middle">Torneos</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="coaches">
-                            <i class="align-middle" data-feather="user"></i>
-                            <span class="align-middle">Coaches</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="arbitros">
-                            <i class="align-middle" data-feather="user-check"></i>
-                            <span class="align-middle">Arbitros</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="equipos">
-                            <i class="align-middle" data-feather="users"></i>
-                            <span class="align-middle">Equipos</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="contabilidad">
-                            <i class="align-middle" data-feather="dollar-sign"></i>
-                            <span class="align-middle">Contabilidad</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" asp-controller="Organizador" asp-action="noticias">
-                            <i class="align-middle" data-feather="book"></i>
-                            <span class="align-middle">Noticias</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="main">
-            <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle js-sidebar-toggle">
-                    <i class="hamburger align-self-center"></i>
-                </a>
-
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav navbar-align">
-                        <li class="nav-item dropdown">
-                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none"
-                               href="#"
-                               data-bs-toggle="dropdown">
-                                <i class="align-middle" data-feather="settings"></i>
-                            </a>
-
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block"
-                               href="#"
-                               data-bs-toggle="dropdown">
-                                <img src="~/img/user-perfil.png"
-                                     class="avatar img-fluid rounded me-1"
-                                     alt="Charles Hall" />
-                                @if (User.Identity.IsAuthenticated != null)
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var coach in Model.Usuarios)
                                 {
-                                    <span class="text-dark">@User.Identity.Name</span>
-                                }
+                                    <tr>
+                                        <th scope="row">@coach.IdUsuario</th>
+                                        <td>
+                                            <img src="~/img/coach.png" alt="Imagen del Coach" />
+                                        </td>
+                                        <td>@coach.Nombre @coach.ApPaterno @coach.ApMaterno</td>
 
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <div class="dropdown-divider"></div>
-
-                                <a asp-action="CerrarSesion" asp-controller="Home" class="dropdown-item text-danger">
-                                    <i class="align-middle me-1" data-feather="log-out"></i>Cerrar sesión
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <h3 class="fw-bold">Coaches</h3>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="input-group flex-nowrap form-search">
-                                        <span class="input-group-text" id="addon-wrapping">
-                                            <i class="fa-solid fa-magnifying-glass"></i>
-                                        </span>
-                                        <input type="text"
-                                               class="form-control form-xx"
-                                               placeholder="Buscar Coache" />
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped display" id="equipos">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Imagen</th>
-                                                <th>Nombre</th>
-                                                <th>Equipo</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var coach in Model.Usuarios)
+                                        <td>
+                                            @if (coach.Equipos != null && coach.Equipos.Any())
                                             {
-                                                <tr>
-                                                    <th scope="row">@coach.IdUsuario</th>
-                                                    <td>
-                                                        <img src="~/img/coach.png" alt="Imagen del Coach" />
-                                                    </td>
-                                                    <td>@coach.Nombre @coach.ApPaterno @coach.ApMaterno</td>
-                               
-                                                    <td>
-                                                        @if (coach.Equipos != null && coach.Equipos.Any())
-                                                        {
-                                                            @coach.Equipos.First().Nombre
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>No asignado</span>
-                                                        }
-                                                    </td>
-                                                    
-                                                </tr>
+                                                @coach.Equipos.First().Nombre
                                             }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+                                            else
+                                            {
+                                                <span>No asignado</span>
+                                            }
+                                        </td>
 
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row text-muted">
-                        <div class="col-6 text-start">
-                            <p class="mb-0">
-                                <a class="text-muted" href="" target="_blank"><strong>SPORTSYNC</strong></a>
-                                &copy;
-                            </p>
-                        </div>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
     </div>
+</main>
 
-    <script src="~/js/app.js"></script>
-</body>
-</html>
+
+            
+
+            

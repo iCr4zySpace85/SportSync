@@ -24,7 +24,7 @@
                         @foreach (var equipo in Model.Equipos)
                         {
                             <div class="col-md-6">
-                                <div class="card">
+                               @*  <div class="card">
                                     <div class="card-body card-contenido">
                                         <img src="https://via.placeholder.com/150"
                                              alt="Imagen del equipo" />
@@ -35,9 +35,21 @@
                                                 <strong>Deporte:</strong><br />
                                                 <span>@equipo.Categoria</span>
                                             </p>
-                                            @* <a href="equipo.html" class="btn btn-outline-primary">Más información</a> *@
+                                            <a href="equipo.html" class="btn btn-outline-primary">Más información</a>
                                             <a href="@Url.Action("Equipo", "PageMain", new { idEquipo = equipo.IdEquipo })" class="btn btn-outline-primary">Más información</a>
                                         </div>
+                                    </div>
+                                </div> *@
+
+                                <div class="card h-100">
+                                     <img src="https://via.placeholder.com/150"
+                                             alt="Imagen del equipo" />
+                                    <div class="p-3">
+                                        <p class="card-text text-danger fw-bold fs-3">@equipo.Nombre</p>
+                                        <p class="card-text fs-6"><strong>Categoria: </strong>@equipo.Categoria</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="@Url.Action("Equipo", "PageMain", new { idEquipo = equipo.IdEquipo })" class="btn btn-outline-primary">Más información</a>
                                     </div>
                                 </div>
                             </div>

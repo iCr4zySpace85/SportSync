@@ -244,28 +244,28 @@ body {
 .card {
   margin-bottom: 1rem;
 }
-.card-body {
+/*.card-body {
   display: flex;
   align-items: center;
-}
-.card-contenido img {
-  width: 150px;
-  height: 150px;
+}*/
+/*.card-contenido img {
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   margin-right: 1rem;
-}
+}*/
 
-.card-partidos {
+/*.card-partidos {
   display: flex;
   align-items: center;
   padding: 10px;
-}
-.image-container {
+}*/
+/*.image-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 150px;
-}
+}*/
 .image-container img {
   width: 80px;
   height: 80px;
@@ -275,9 +275,9 @@ body {
   flex: 1;
   padding: 0 20px;
 }
-.card-text span {
+/*.card-text span {
   display: block;
-}
+}*/
 
 .navbar-custom .navbar-brand {
   display: flex;

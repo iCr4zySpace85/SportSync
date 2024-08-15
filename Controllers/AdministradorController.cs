@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SportSync.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
     public class AdministradorController : Controller
     {
        private readonly SportsyncContext _context;
