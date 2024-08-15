@@ -1,45 +1,36 @@
 @{
-    ViewData["Title"] = "Torneos Arbitro";
+    ViewData["Title"] = "Árbitro";
 }
 
 @{
-    Layout = "_LayoutTorneos";
+    Layout = "_LayoutTorneosUsers";
 }
 
-<div class="container">
-  <h1>Torneos</h1>
-  @if (User.Identity.IsAuthenticated != null)
-                  {
-                    <span class="text-dark ">@User.Identity.Name</span>
-                  }
-  <div class="grid">
-    <div class="card">
-      <img src="https://via.placeholder.com/400x200" alt="Torneo 1">
-      <div class="card-content">
-        <h2>Torneo 1</h2>
-        <p>Información sobre el torneo 1.</p>
-        <a href="#">Ir al torneo 1</a>
-      </div>
-    </div>
+@model IEnumerable<SportSync.Models.Torneo>
 
-    <div class="card">
-      <img src="https://via.placeholder.com/400x200" alt="Torneo 2">
-      <div class="card-content">
-        <h2>Torneo 2</h2>
-        <p>Información sobre el torneo 2.</p>
-        <a href="#">Ir al torneo 2</a>
-      </div>
-    </div>
 
-    <div class="card">
-      <img src="https://via.placeholder.com/400x200" alt="Torneo 2">
-      <div class="card-content">
-        <h2>Torneo 2</h2>
-        <p>Información sobre el torneo 2.</p>
-        <a href="#">Ir al torneo 2</a>
-      </div>
-    </div>
+    <div class="container-fluid p-0">
 
-    <!-- Puedes agregar más tarjetas aquí según sea necesario -->
-  </div>
-</div>
+        @if (User.Identity.IsAuthenticated != null)
+        {
+            @* <img src="~/img/user-perfil.png" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> *@
+            <span class="text-dark"><b>Árbitro: </b> @User.Identity.Name</span>
+        }
+    </div>
+    <h1>Torneos Asignados</h1>
+
+    <div class="grid">
+        @foreach (var torneo in Model)
+        {
+            <div class="card">
+                @* Si tienes una imagen para el torneo, puedes descomentar y ajustar esta línea *@
+                @* <img src="data:image/jpeg;base64,@Convert.ToBase64String(torneo.IMG_torneo)" alt="@torneo.Nombre" style="width:400px; height:200px;" /> *@
+                <div class="card-content">
+                    <h2>@torneo.Nombre</h2>
+                    <p>@torneo.Categoria</p>
+                    <p>@torneo.FechaInicio.ToShortDateString() - @torneo.FechaFin.ToShortDateString()</p>
+                    <a href="@Url.Action("PanelArbitro", "Arbitro", new { idTorneo = torneo.IdTorneo })">Ir al torneo</a>
+                </div>
+            </div>
+        }
+    </div>

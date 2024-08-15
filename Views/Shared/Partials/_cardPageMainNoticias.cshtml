@@ -1,0 +1,22 @@
+﻿@model SportSync.Models.ViewModels.PageInfoViewModel
+
+<div class="col-md-4 p-2">
+    <!-- cards -->
+    @foreach (var noticia in Model.Noticias)
+    {
+        <div class="container-fluid p-3 border border-dark mb-3">
+            <div class="card rounded-0">
+                <div class="card-body">
+                    <h5 class="card-title">@noticia.Titulo</h5>
+
+                    <p class="text-muted">@noticia.FechaPublicacion.ToShortDateString()</p>
+
+                    <div class="row">
+                        @* <p class="card-text">@Html.Encode(noticia.Contenido)</p> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!--fin cards -->
+</div>

@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Diagnostics;
 using System.Security.Claims;
-using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SportSync.Data;
+using SportSync.Models;
+using SportSync.Models.ViewModels;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CrafterCodes.Controllers
 {
@@ -19,16 +23,13 @@ namespace CrafterCodes.Controllers
     public class CoachController : Controller
     {
 
-        //private readonly ILogger<HomeController> _logger;
-        
-        //private readonly Contexto _contexto;
-        //private readonly ApplicationDbContext _context;
+        private readonly SportSyncContext _context;
 
-        //public CoachController(ILogger<HomeController> logger, Contexto contexto)
-        //{
-        //    _logger = logger;
-        //    _contexto = contexto;
-        //}
+        public CoachController(SportSyncContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();

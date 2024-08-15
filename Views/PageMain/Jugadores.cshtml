@@ -5,7 +5,7 @@
 }
 
 <!-- Segundo navbar -->
-@await Html.PartialAsync("~/Views/Shared/Partials/_navbarEquipo.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Partials/_navbarPageMainEquipo.cshtml")
 
 <main class="p-5">
     <div class="container-fluid">
@@ -51,34 +51,9 @@
             </div>
 
             <!-- Columna de noticias -->
-            <div class="col-md-4 p-3">
-                @foreach (var noticia in Model.Noticias)
-                {
-                    <!-- cards -->
-                    <div class="container-fluid p-3 border border-dark mb-3">
-                        <div class="card rounded-0">
-                            <div class="ratio ratio-16x9">
-                                <iframe src="https://www.youtube.com/embed/DgdD5rUozew?si=O1REZp9SKbyK84uh"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerpolicy="strict-origin-when-cross-origin"
-                                        allowfullscreen></iframe>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@noticia.Titulo</h5>
-                                <p class="card-text">
-                                    @noticia.Contenido
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">Publicado el @noticia.FechaPublicacion.ToString("MMMM dd, yyyy")</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            @await Html.PartialAsync("~/Views/Shared/Partials/_cardPageMainNoticias.cshtml")
                     <!--fin cards -->
-                }
-            </div>
+               
             <!-- fin Columna de noticias -->
         </div>
     </div>
