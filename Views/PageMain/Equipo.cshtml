@@ -1,6 +1,6 @@
 @model SportSync.Models.ViewModels.PageInfoViewModel
     <!-- Segundo navbar -->
-   @await Html.PartialAsync("~/Views/Shared/Partials/_navbarEquipo.cshtml")
+   @await Html.PartialAsync("~/Views/Shared/Partials/_navbarPageMainEquipo.cshtml")
 
 @{
     var idEquipo = ViewBag.IdEquipo;
@@ -49,26 +49,7 @@
             </div>
 
             <!-- Columna de noticias -->
-            <div class="col-md-4 p-3">
-                @foreach (var noticia in Model.Noticias)
-                {
-                    <!-- cards -->
-                    <div class="container-fluid p-3 border border-dark mb-3">
-                        <div class="card rounded-0">
-                            <div class="card-body">
-                                <h5 class="card-title">@noticia.Titulo</h5>
-                                <p class="card-text">
-                                    @noticia.Contenido
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">Publicado el @noticia.FechaPublicacion.ToString("MMMM dd, yyyy")</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--fin cards -->
-                }
-            </div>
+            @await Html.PartialAsync("~/Views/Shared/Partials/_cardPageMainNoticias.cshtml")
             <!-- fin Columa de noticias -->
         </div>
     </div>

@@ -45,78 +45,15 @@
                                 </div>
                             </div>
                         }
-                @* <div class="col-md-6">
-                  <div class="card">
-                    <div class="card-body card-contenido">
-                      <img
-                        src="https://via.placeholder.com/150"
-                        alt="Imagen del torneo"
-                      />
-                      <div>
-                        <p class="card-text fs-6">
-                          <strong>Nombre del torneo:</strong><br />
-                          <span>Deporte:</span>
-                          <span>Categoria:</span>
-                          <span>Temporada:</span>
-                        </p>
-                        <a href="Torneo.cshtml" class="btn btn-outline-primary"
-                          >Más información</a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div> *@
-                
               </div>
               <!-- FIn Cards fila -->
 
             </div>
           </div>
           <!-- Columa de noticias -->
-          <div class="col-md-4 p-2">
-            <!-- cards -->
 
-            @foreach (var noticia in Model.Noticias)
-                {
-                    <div class="container-fluid p-3 border border-dark mb-3">
-                        <div class="card rounded-0">
-                            <div class="card-body">
-                                <h5 class="card-title">@noticia.Titulo</h5>
-                                
-                                <p class="text-muted">@noticia.FechaPublicacion.ToShortDateString()</p>
+          @await Html.PartialAsync("~/Views/Shared/Partials/_cardPageMainNoticias.cshtml")
 
-                                <div class="row">
-                                    @* <p class="card-text">@Html.Encode(noticia.Contenido)</p> *@
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            @* <div class="container-fluid p-3 border border-dark mb-3">
-              <div class="card rounded-0">
-                <div class="ratio ratio-16x9">
-                  <iframe
-                    src="https://www.youtube.com/embed/DgdD5rUozew?si=O1REZp9SKbyK84uh"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-                <div class="card-body">
-                  <p class="card-text">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Blanditiis, quis! Sequi veniam quo laboriosam consectetur
-                    fuga cupiditate odio adipisci velit earum quos, dolor
-                    assumenda libero repellendus natus nulla vel nesciunt!
-                  </p>
-                </div>
-              </div>
-            </div> *@
-            <!--fin cards -->
-          </div>
           <!-- fin Columa de noticias -->
         </div>
       </div>

@@ -5,7 +5,7 @@
 }
 
 <!-- Segundo navbar -->
-@await Html.PartialAsync("~/Views/Shared/Partials/_navbarTorneo.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Partials/_navbarPageMainTorneo.cshtml")
 
 
 <main class="p-5">
@@ -47,31 +47,7 @@
                 </div>
             </div>
             <!-- Columa de noticias -->
-            <div class="col-md-4 p-3">
-                <!-- cards -->
-                <div class="container-fluid p-3 border border-dark mb-3">
-                    @foreach (var noticia in Model.Noticias)
-                    {
-                        <div class="card rounded-0 mb-3">
-                            <div class="ratio ratio-16x9">
-                                <iframe src="https://www.youtube.com/embed/DgdD5rUozew?si=O1REZp9SKbyK84uh"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerpolicy="strict-origin-when-cross-origin"
-                                        allowfullscreen></iframe>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">@noticia.Titulo</h5>
-                                <p class="card-text">
-                                    @noticia.Contenido
-                                </p>
-                            </div>
-                        </div>
-                    }
-                </div>
-                <!--fin cards -->
-            </div>
+            @await Html.PartialAsync("~/Views/Shared/Partials/_cardPageMainNoticias.cshtml")
             <!-- fin Columa de noticias -->
         </div>
     </div>
