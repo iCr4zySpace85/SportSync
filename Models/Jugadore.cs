@@ -20,8 +20,5 @@ public partial class Jugadore
     public int? Numero { get; set; }
 
     public string? Descripcion { get; set; }
-
-    public virtual ICollection<BiometricosJugadore> BiometricosJugadores { get; set; } = new List<BiometricosJugadore>();
-
     public virtual Equipo IdEquipoNavigation { get; set; } = null!;
 }

@@ -14,6 +14,7 @@ public partial class Equipo
     public int IdDeporte { get; set; }
 
     public string Categoria { get; set; } = null!;
+    public int IdTorneo { get; set; }
 
     public virtual ICollection<Arbitraje> Arbitrajes { get; set; } = new List<Arbitraje>();
 

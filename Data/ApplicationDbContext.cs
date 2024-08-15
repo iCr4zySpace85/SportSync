@@ -35,7 +35,6 @@ namespace SportSync.Data
         public DbSet<Inscripcione> Inscripciones { get; set; }
         public DbSet<Arbitraje> Arbitrajes { get; set; }
         public DbSet<ResultadosTorneo> ResultadosTorneo { get; set; }
-        public DbSet<BiometricosJugadore> BiometricosJugadores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
