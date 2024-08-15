@@ -7,13 +7,12 @@
 }
 
 <div class="container-fluid p-0">
-
-    @if (User.Identity.IsAuthenticated != null)
+    @if (User.Identity.IsAuthenticated)
     {
-        @* <img src="~/img/user-perfil.png" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> *@
-        <span class="text-dark"><b>Árbitro: </b> @User.Identity.Name</span>
+        <span class="text-dark"><b>Coach: </b> @User.Identity.Name</span>
     }
 </div>
+
 <h1>Torneos Inscritos</h1>
 
 <div class="grid">
@@ -26,7 +25,7 @@
                 <h2>@torneo.Nombre</h2>
                 <p>@torneo.Categoria</p>
                 <p>@torneo.FechaInicio.ToShortDateString() - @torneo.FechaFin.ToShortDateString()</p>
-                <a href="@Url.Action("PanelArbitro", "Arbitro", new { idTorneo = torneo.IdTorneo })">Ir al torneo</a>
+                <a href="@Url.Action("DetalleTorneo", "Torneo", new { idTorneo = torneo.IdTorneo })">Ir al torneo</a>
             </div>
         </div>
     }
