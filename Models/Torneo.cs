@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportSync.Models;
 
@@ -13,7 +15,7 @@ public partial class Torneo
     public string Nombre { get; set; } = null!;
 
     public int IdDeporte { get; set; }
-
+    
     public string? Categoria { get; set; }
 
     public DateTime FechaInicio { get; set; }
