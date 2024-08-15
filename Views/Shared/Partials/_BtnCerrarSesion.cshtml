@@ -1,4 +1,6 @@
-﻿<link rel="stylesheet" href="~/css/panel.css">
-<a asp-action="CerrarSesion" asp-controller="Home" class="dropdown-item text-danger">
-    <i class="align-middle" data-feather="log-out"></i>Cerrar sesión
-</a>
+﻿
+<form asp-action="Logout" asp-controller="Home" method="post">
+    <button type="submit" class="dropdown-item text-danger">
+        <i class="align-middle me-1" data-feather="log-out"></i>Cerrar sesión
+    </button>
+</form>

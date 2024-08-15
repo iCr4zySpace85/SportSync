@@ -6,16 +6,6 @@ using SportSync.ViewModels;
 using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SportSync.Data;
-using SportSync.ViewModels;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace SportSync.Controllers
 {
@@ -61,6 +51,7 @@ namespace SportSync.Controllers
                 {
                     var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
                         new Claim(ClaimTypes.Name, usuario.Nombre + " " + usuario.ApPaterno + " " + usuario.ApMaterno),
                         new Claim(ClaimTypes.Role, GetRoleName(usuario.IdRol))
                     };
@@ -113,6 +104,7 @@ namespace SportSync.Controllers
                 "Organizador" => RedirectToAction("Index", "Organizador"),
                 "Administrador" => RedirectToAction("Index", "Administrador"),
                 "Coach" => RedirectToAction("Index", "Coach"),
+                "Árbitro" => RedirectToAction("Index", "Arbitro"),
                 // Añadir más roles según sea necesario
                 _ => RedirectToAction("Index", "Home")
             };

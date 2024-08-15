@@ -1,0 +1,12 @@
+﻿<link rel="stylesheet" href="~/css/panel.css">
+<a href="#" id="logout" style="text-decoration: none; display: flex; align-items: center;">
+
+    <a href="#" onclick="document.getElementById('logoutForm').submit();" class="dropdown-item text-danger">
+        <i class="align-middle me-1" data-feather="log-out"></i> Cerrar sesión
+    </a>
+
+    <!-- Formulario oculto -->
+    <form id="logoutForm" asp-action="Logout" asp-controller="Home" method="post" style="display: none;">
+       
+    </form>
+</a>

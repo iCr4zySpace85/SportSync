@@ -17,7 +17,6 @@ public partial class Equipo
 
     public int? IdCoach { get; set; }
 
-
     public virtual ICollection<Arbitraje> Arbitrajes { get; set; } = new List<Arbitraje>();
 
     public virtual ICollection<EquiposTorneo> EquiposTorneos { get; set; } = new List<EquiposTorneo>();
